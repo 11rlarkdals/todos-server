@@ -1,11 +1,11 @@
 import {
   BaseEntity,
-  //   BeforeInsert,
+  BeforeInsert,
   Column,
   Entity,
   PrimaryGeneratedColumn,
 } from "typeorm";
-// import bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 
 @Entity()
 export class User extends BaseEntity {
@@ -21,13 +21,13 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
-  //   @BeforeInsert()
-  //   async hashPassword() {
-  //     const salt = await bcrypt.genSalt(10);
-  //     this.password = await bcrypt.hash(this.password, salt);
-  //   }
+  @BeforeInsert()
+  async hashPassword() {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  }
 
-  //   async comparePassword(enteredPassword: string): Promise<boolean> {
-  //     return await bcrypt.compare(enteredPassword, this.password);
-  //   }
+  async comparePassword(enteredPassword: string): Promise<boolean> {
+    return await bcrypt.compare(enteredPassword, this.password);
+  }
 }

@@ -13,6 +13,8 @@ AppDataSource.initialize()
     console.error("Error during Data Source initialization:", err);
   });
 
+app.use(express.json());
+
 app.use(authRouter);
 
 app.listen(port, () => {
